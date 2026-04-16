@@ -1,0 +1,8 @@
+CentroAmerica = {Guatemala,ElSalvador,Honduras,Nicaragua,CostaRica,Panama}
+Caribe = {Cuba,Jamaica,RD,Haiti,PuertoRico}
+NorteAmerica = {Canada,EstadosUnidos,Mexico}
+MesoAmerica = {Mexico} + CentroAmerica
+SurAmerica = {Venezuela,Gyuana,Surinam,    Colombia,  Ecuador,   Peru, Bolivia, Chile, Argentina, Uruguay, Paraguay, Brasil}
+America = NorteAmerica + CentroAmerica + Caribe + SurAmerica}
+Atlantida = { }
+Interregion = NorteAmerica * MesoAmerica

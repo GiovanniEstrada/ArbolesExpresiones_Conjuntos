@@ -1,0 +1,30 @@
+
+Arbol(Maestro)
+└── Mamiferos
+    ├── Aves
+    │   ├── Acuaticos
+    │   │   └── Animales
+    │   │       ├── AcuaticosNoCarnivoros
+    │   └── Carnivoros
+    │       ├── AvesVoladoras
+    │       └── Herbivoros
+    │           ├── Domesticos
+    │           │   ├── CarnivorosSalvajes
+    │           │   └── DomesticosOmnivoros
+    │           │       └── Final
+    └── Reptiles
+        ├── Omnivoros
+        │   ├── MamiferosAcuaticos
+        │   │   └── NoMamiferos
+        │   │       ├── NoAves
+        │   │       │   ├── Mixto1
+        │   │       │   │   └── Mixto2
+        │   │       │   │       └── Mixto3
+        │   │       │   │           └── Mixto4
+        └── Voladores
+            ├── Salvajes
+            │   ├── ReptilesAcuaticos
+            │   └── SoloMamiferos
+            │       ├── SoloAves
+            │       └── Terrestres
+            └── VoladoresNoAves

@@ -1,0 +1,27 @@
+
+Arbol(Maestro)
+└── Enteros
+    └── Positivos
+        ├── Negativos
+        │   ├── Impares
+        │   │   ├── EnterosNoNegativos
+        │   │   │   └── Final
+        │   │   └── Naturales
+        │   │       ├── ImparesNoPrimos
+        │   │       │   └── Mixto1
+        │   │       │       └── Mixto2
+        │   │       │           └── Mixto3
+        │   │       │               └── Mixto4
+        │   └── Pares
+        │       ├── NegativosPares
+        │       │   ├── NegativosImpares
+        │       │   │   └── NegativosNoPares
+        │       │   └── NoPrimos
+        │       │       ├── NoPares
+        │       │       │   ├── NoImpares
+        │       └── ParesNoPrimos
+        └── Primos
+            ├── PositivosPares
+            │   ├── PositivosImpares
+            │   │   └── PositivosNoPrimos
+            └── PrimosPositivos

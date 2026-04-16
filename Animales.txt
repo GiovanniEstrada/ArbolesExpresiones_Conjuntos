@@ -1,0 +1,36 @@
+Mamiferos = {Perro,Gato,Elefante,Leon,Tigre,Ballena,Delfin,Humano}
+Aves = {Aguila,Loro,Gallina,Pato,Pinguino}
+Reptiles = {Serpiente,Cocodrilo,Iguana,Tortuga}
+Acuaticos = {Ballena,Delfin,Pez,Tiburon,Pulpo,Pinguino}
+Voladores = {Aguila,Loro,Pato,Murcielago}
+Carnivoros = {Leon,Tigre,Cocodrilo,Tiburon,Aguila}
+Herbivoros = {Elefante,Tortuga,Iguana}
+Omnivoros = {Humano,Oso,Gallina,Pato}
+Domesticos = {Perro,Gato,Gallina,Pato}
+Salvajes = {Leon,Tigre,Elefante,Cocodrilo,Tiburon,Aguila}
+
+MamiferosAcuaticos = Mamiferos * Acuaticos
+AvesVoladoras = Aves * Voladores
+ReptilesAcuaticos = Reptiles * Acuaticos
+
+CarnivorosSalvajes = Carnivoros * Salvajes
+DomesticosOmnivoros = Domesticos * Omnivoros
+
+SoloMamiferos = Mamiferos - Acuaticos
+SoloAves = Aves - Voladores
+
+NoMamiferos = ~Mamiferos
+NoAves = ~Aves
+
+Terrestres = Mamiferos + Reptiles
+Animales = Mamiferos + Aves + Reptiles + Acuaticos
+
+AcuaticosNoCarnivoros = Acuaticos - Carnivoros
+VoladoresNoAves = Voladores - Aves
+
+Mixto1 = Mamiferos + Aves * Carnivoros
+Mixto2 = Acuaticos * Mamiferos + Reptiles
+Mixto3 = Mamiferos + Aves - Domesticos
+Mixto4 = Carnivoros * Acuaticos + Voladores
+
+Final = Mixto1 + Mixto2 - Mixto3
