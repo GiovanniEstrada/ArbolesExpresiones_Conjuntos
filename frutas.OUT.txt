@@ -1,0 +1,24 @@
+
+Arbol(Maestro)
+└── Frutas
+    ├── Colores
+    │   ├── Amarillas
+    │   │   ├── Alimentos
+    │   └── ColoresEnAlimentos
+    │       └── Final
+    │           ├── Diferencia
+    └── Verduras
+        ├── Rojas
+        │   ├── Naranjas
+        │   │   ├── FrutasRojas
+        │   │   │   ├── FrutasNoRojas
+        │   │   │   └── Mixto1
+        │   │   │       └── Mixto2
+        │   │   │           └── Mixto3
+        │   │   └── NoFrutas
+        │   │       └── NoVerduras
+        │   └── Verdes
+        │       ├── SoloFrutas
+        │       │   └── SoloVerduras
+        └── VerdurasVerdes
+            ├── VerdurasNoVerdes

@@ -1,0 +1,123 @@
+Arbol(Centroamerica)
+└── Guatemala
+    ├── ElSalvador
+    │   ├── CostaRica
+    │   │   ├── Belice
+    └── Honduras
+        └── Nicaragua
+            └── Panama
+Arbol(Caribe)
+└── Cuba
+    ├── Barbados
+    │   ├── AntiguaBarbuda
+    └── Haiti
+        └── RepublicaDominicana
+            ├── Jamaica
+            └── TrinidadTobago
+Arbol(Norteamerica)
+└── Canada
+    └── EstadosUnidos
+        └── Mexico
+Arbol(Suramerica)
+└── Colombia
+    ├── Bolivia
+    │   ├── Argentina
+    │   └── Chile
+    │       ├── Brasil
+    └── Venezuela
+        ├── Guyana
+        │   ├── Ecuador
+        │   └── Surinam
+        │       ├── Peru
+        │       │   ├── Paraguay
+        │       └── Uruguay
+
+Elementos Arbol: AmericaLatina -> {AntiguaBarbuda, Argentina, Barbados, Belice, Bolivia, Brasil, Chile, Colombia, CostaRica, Cuba, Ecuador, ElSalvador, Guatemala, Guyana, Haiti, Honduras, Jamaica, Nicaragua, Panama, Paraguay, Peru, RepublicaDominicana, Surinam, TrinidadTobago, Uruguay, Venezuela}
+Elementos Arbol: America -> {AntiguaBarbuda, Argentina, Barbados, Belice, Bolivia, Brasil, Canada, Chile, Colombia, CostaRica, Cuba, Ecuador, ElSalvador, EstadosUnidos, Guatemala, Guyana, Haiti, Honduras, Jamaica, Mexico, Nicaragua, Panama, Paraguay, Peru, RepublicaDominicana, Surinam, TrinidadTobago, Uruguay, Venezuela}Arbol(America)
+└── Canada
+    ├── Belice
+    │   ├── Barbados
+    │   │   ├── AntiguaBarbuda
+    │   │   │   └── Argentina
+    │   └── Bolivia
+    │       └── Brasil
+    └── EstadosUnidos
+        ├── ElSalvador
+        │   ├── CostaRica
+        │   │   ├── Colombia
+        │   │   │   ├── Chile
+        │   │   └── Cuba
+        │   │       └── Ecuador
+        └── Mexico
+            ├── Guatemala
+            │   └── Honduras
+            │       ├── Haiti
+            │       │   ├── Guyana
+            │       └── Jamaica
+            └── Nicaragua
+                └── Panama
+                    └── RepublicaDominicana
+                        ├── Peru
+                        │   ├── Paraguay
+                        └── TrinidadTobago
+                            ├── Surinam
+                            └── Venezuela
+                                ├── Uruguay
+Arbol(EuropaOriental)
+└── Polonia
+    ├── Hungria
+    │   ├── Bulgaria
+    │   │   ├── Bielorusia
+    │   │   └── Grecia
+    │   │       ├── Dinamarca
+    │   │       │   └── Finlandia
+    │   └── Noruega
+    └── Rumania
+        └── Suecia
+            ├── Rusia
+            └── Ucrania
+Arbol(Europa)
+└── Alemania
+    └── Francia
+        ├── Espana
+        │   ├── Belgica
+        │   │   ├── Austria
+        │   │   └── Bulgaria
+        │   │       ├── Bielorusia
+        │   │       └── Dinamarca
+        │   └── Finlandia
+        └── ReinoUnido
+            ├── Italia
+            │   ├── Irlanda
+            │   │   ├── Hungria
+            │   │   │   ├── Grecia
+            │   └── Portugal
+            │       ├── PaisesBajos
+            │       │   ├── Noruega
+            │       │   └── Polonia
+            └── Suiza
+                ├── Rumania
+                │   └── Suecia
+                │       ├── Rusia
+                └── Ucrania
+
+Elementos Arbol: Europa -> {Alemania, Austria, Belgica, Bielorusia, Bulgaria, Dinamarca, Espana, Finlandia, Francia, Grecia, Hungria, Irlanda, Italia, Noruega, PaisesBajos, Polonia, Portugal, ReinoUnido, Rumania, Rusia, Suecia, Suiza, Ucrania}
+Elementos Arbol: OrienteMedio -> {ArabiaSaudita, Egipto, EmiratosArabes, Irak, Iran, Israel, Jordania, Turquia}Arbol(AfricaNorte)
+└── Egipto
+    ├── Argelia
+    └── Marruecos
+        ├── Libia
+        └── Tunez
+Arbol(AfricaSubsahariana)
+└── Nigeria
+    ├── Etiopia
+    │   ├── Angola
+    │   └── Kenia
+    │       ├── Ghana
+    │       └── Mozambique
+    └── Sudafrica
+        └── Tanzania
+            └── Uganda
+
+Elementos Arbol: Asia -> {ArabiaSaudita, Bangladesh, China, CoreaDelSur, Egipto, EmiratosArabes, Filipinas, India, Indonesia, Irak, Iran, Israel, Japon, Jordania, Malasia, Pakistan, Singapur, Tailandia, Turquia, Vietnam}
+Elementos Arbol: Mundo -> {Alemania, Angola, AntiguaBarbuda, ArabiaSaudita, Argelia, Argentina, Australia, Austria, Bangladesh, Barbados, Belgica, Belice, Bielorusia, Bolivia, Brasil, Bulgaria, Canada, Chile, China, Colombia, CoreaDelSur, CostaRica, Cuba, Dinamarca, Ecuador, Egipto, ElSalvador, EmiratosArabes, Espana, EstadosUnidos, Etiopia, Fiji, Filipinas, Finlandia, Francia, Ghana, Grecia, Guatemala, Guyana, Haiti, Honduras, Hungria, India, Indonesia, Irak, Iran, Irlanda, Israel, Italia, Jamaica, Japon, Jordania, Kenia, Libia, Malasia, Marruecos, Mexico, Mozambique, Nicaragua, Nigeria, Noruega, NuevaZelanda, PaisesBajos, Pakistan, Panama, PapuaNuevaGuinea, Paraguay, Peru, Polonia, Portugal, ReinoUnido, RepublicaDominicana, Rumania, Rusia, Singapur, Sudafrica, Suecia, Suiza, Surinam, Tailandia, Tanzania, TrinidadTobago, Tunez, Turquia, Ucrania, Uganda, Uruguay, Venezuela, Vietnam}Arbol(Vacio)

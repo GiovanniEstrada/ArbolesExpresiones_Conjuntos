@@ -5,6 +5,15 @@
 
 #define CATALOGO_OPERADORES "+-*#~()"
 
+char catalogoOperaciones[6][16] = {
+    "Arbol",
+    "Elementos",
+    "Conjuntos",
+    "Borrar",
+    "Borrar_Elemento",
+    "Borrar_Conjuntos"
+};
+
 typedef struct ArbolConjuntos ArbolConjuntos;
 typedef struct ArbolDetalleConjunto ArbolDetalleConjunto;
 typedef struct ArbolExpresiones ArbolExpresiones;
@@ -42,7 +51,7 @@ struct ArbolDetalleConjunto {
 struct ArbolExpresiones {
     char operador;
     char nombreConjunto[999];
-    int tipoDato;     // 0 - Operador, 1 - Conjunto, 2 - ELEMENTOS, 3 - NOMBRE CONJUNTO
+    int tipoDato;     // 0 - Operador, 1 - Conjunto, 2 - ELEMENTOS, 3 - NOMBRE CONJUNTO, 4 - ACCION
 
     ArbolExpresiones *nodoIzquierda;
     ArbolExpresiones *nodoDerecha;
@@ -153,6 +162,10 @@ ArbolExpresiones* fnConstruyeArbolExpresion(ListaItems *items) {
             strcpy(nuevo->nombreConjunto, items->item[i].nombre);
 
             pila[++top] = nuevo;
+        }
+        if (top < 0) {
+            printf("Error: expresion mal formada (faltan operandos)\n");
+            return NULL;
         }
     }
 
@@ -325,7 +338,6 @@ ArbolDetalleConjunto* fnEvaluaExpresion(ArbolExpresiones *nodo) {
         return NULL;
     }
 
-    // NOMBRE DEL CONJUNTO (lado izquierdo de =)
     if (nodo->tipoDato == 3) {
         return NULL;
     }
@@ -356,11 +368,22 @@ ArbolDetalleConjunto* fnEvaluaExpresion(ArbolExpresiones *nodo) {
 
     switch (nodo->operador) {
 
-        case '+': return unionArboles(izq, der);
+        case '+':
+            if (
+                    izq == NULL || der == NULL
+                ) {
+                return NULL;
+            }
+            return unionArboles(izq, der);
         case '*': return interseccionArboles(izq, der);
         case '-': return diferenciaArboles(izq, der);
         case '#': return diferenciaSimetrica(izq, der);
-        case '~': return complemento(izq);
+        case '~':
+            if (der != NULL) {
+                return complemento(der);
+            }
+
+            return complemento(izq);
     }
 
     return NULL;
@@ -423,37 +446,102 @@ ListaItems* fnObtieneItemsPostFijo(ListaItems *items) {
     Item pila[999];
     int cabeza = -1;
     int j = 0;
-    ListaItems *lista_Items = calloc(1, sizeof(ListaItems));
+
+    ListaItems *salida = calloc(1, sizeof(ListaItems));
 
     for (int i = 0; i < items->cantidadItems; i++) {
-        // SI NO ES OPERADOR, SE INSERTA DE FORMA NORMAL
-        if (items->item[i].TipoDato != 0) {
-            lista_Items->item[j++] = items->item[i];
-        }
-        else {
-            // if (items->item[i].nombre[0] == '(' || items->item[i].nombre[0] == ')') {
-            //     continue;
-            // }
 
-            while (
-                cabeza >= 0 &&
-                fnObtieneJerarquia(items->item[i].nombre) <=
-                fnObtieneJerarquia(pila[cabeza].nombre)
-            ) {
-                lista_Items->item[j++] = pila[cabeza--];
+        Item actual = items->item[i];
+
+        if (actual.TipoDato != 0) {
+            salida->item[j++] = actual;
+            continue;
+        }
+
+        char op = actual.nombre[0];
+
+        if (op == '(') {
+            pila[++cabeza] = actual;
+            continue;
+        }
+
+        if (op == ')') {
+            while (cabeza >= 0 && pila[cabeza].nombre[0] != '(') {
+                salida->item[j++] = pila[cabeza--];
             }
 
-            pila[++cabeza] = items->item[i];
-
+            // quitar el '(' de la pila
+            if (cabeza >= 0 && pila[cabeza].nombre[0] == '(') {
+                cabeza--;
+            }
+            continue;
         }
+
+        while (
+            cabeza >= 0 &&
+            pila[cabeza].nombre[0] != '(' &&
+            fnObtieneJerarquia(actual.nombre) <= fnObtieneJerarquia(pila[cabeza].nombre)
+        ) {
+            salida->item[j++] = pila[cabeza--];
+        }
+
+        pila[++cabeza] = actual;
     }
 
     while (cabeza >= 0) {
-        lista_Items->item[j++] = pila[cabeza--];
+        salida->item[j++] = pila[cabeza--];
     }
-    lista_Items->cantidadItems = j;
-    return lista_Items;
+
+    salida->cantidadItems = j;
+    return salida;
 }
+
+// ListaItems* fnObtieneItemsPostFijo(ListaItems *items) {
+//     Item pila[999];
+//     int cabeza = -1;
+//     int j = 0;
+//     ListaItems *lista_Items = calloc(1, sizeof(ListaItems));
+//
+//     for (int i = 0; i < items->cantidadItems; i++) {
+//         // SI NO ES OPERADOR, SE INSERTA DE FORMA NORMAL
+//         if (items->item[i].TipoDato != 0) {
+//             lista_Items->item[j++] = items->item[i];
+//         }
+//         else {
+//             // if (items->item[i].nombre[0] == '(' || items->item[i].nombre[0] == ')') {
+//             //     continue;
+//             // }
+//
+//             while (
+//                 cabeza >= 0 &&
+//                 fnObtieneJerarquia(items->item[i].nombre) <=
+//                 fnObtieneJerarquia(pila[cabeza].nombre)
+//             ) {
+//                 lista_Items->item[j++] = pila[cabeza--];
+//             }
+//
+//             pila[++cabeza] = items->item[i];
+//
+//         }
+//     }
+//
+//     while (cabeza >= 0) {
+//         lista_Items->item[j++] = pila[cabeza--];
+//     }
+//     lista_Items->cantidadItems = j;
+//     return lista_Items;
+// }
+
+bool fnEsOperacion(char cadena[999]) {
+
+    for (int i = 0; i < 6; i++) {
+        const int rs = strcmp(cadena, catalogoOperaciones[i]);
+        if (rs == 0) {
+            return true;
+        };
+    }
+    return false;
+};
 
 void fnObtieneItems(char lista_conjunto[999], ListaItems *items) {
 
@@ -465,6 +553,7 @@ void fnObtieneItems(char lista_conjunto[999], ListaItems *items) {
 
     int j = 0;
     int cantidadItems = 0;
+    bool esFuncion = false;
     if (items->cantidadItems < 0) {
         items->cantidadItems = 0;
     } else {
@@ -473,6 +562,47 @@ void fnObtieneItems(char lista_conjunto[999], ListaItems *items) {
 
     for (int i = 0; lista_conjunto[i] != '\0'; i++) {
         if (lista_conjunto[i] == ' ') {
+            continue;
+        }
+
+        if (esFuncion) {
+
+            if (lista_conjunto[i] == ']' ||
+                lista_conjunto[i] == '[' ||
+                lista_conjunto[i] == '(') {
+                continue;
+            }
+
+            // SE INSERTA EL PARAMETRO
+            if (lista_conjunto[i] == ',' || lista_conjunto[i] == ')') {
+                Item item  = {0};
+                item.TipoDato = 3;
+                strncpy(item.nombre, tmpValor, sizeof(item.nombre)-1);
+                item.nombre[sizeof(item.nombre)-1] = '\0';
+                items->item[cantidadItems] = item;
+                cantidadItems++;
+                j = 0;
+                esFuncion = true;
+                memset(tmpValor, 0, sizeof(tmpValor));
+            }
+            else {
+                tmpValor[j] = lista_conjunto[i];
+                j++;
+            }
+
+            continue;
+        }
+
+        if (fnEsOperacion(tmpValor) && cantidadItems == 0) {
+            Item item  = {0};
+            item.TipoDato = 4;
+            strncpy(item.nombre, tmpValor, sizeof(item.nombre)-1);
+            item.nombre[sizeof(item.nombre)-1] = '\0';
+            items->item[cantidadItems] = item;
+            cantidadItems++;
+            j = 0;
+            esFuncion = true;
+            memset(tmpValor, 0, sizeof(tmpValor));
             continue;
         }
 
@@ -565,6 +695,9 @@ void fnObtieneItems(char lista_conjunto[999], ListaItems *items) {
     items->cantidadItems = cantidadItems;
 }
 
+void fnImprimeTexto(char texto[999], FILE *out) {
+    fprintf(out, "%s", texto);
+}
 
 void imprimirArbol(ArbolDetalleConjunto *raiz, char *prefijo, int esIzq, FILE *out) {
     if (raiz == NULL) return;
@@ -611,7 +744,7 @@ void fnOpcionArbolMaestro(FILE *source, ArbolConjuntos *arbol) {
 
     if (!arbol) return;
 
-    fprintf(source,"\nArbol(Maestro)\n");
+    fprintf(source,"Arbol(Maestro)\n");
     fnImprimeArbolMaestro(arbol, "", source, false);
 }
 
@@ -629,12 +762,12 @@ void imprimirElementos(ArbolDetalleConjunto *raiz, FILE *out, bool *esPrimero) {
     imprimirElementos(raiz->nodoDerecha, out, esPrimero);
 }
 
-void fnImprimeElementoConjunto(FILE *source, ArbolConjuntos arbol, char nombre[999]) {
+void fnImprimeElementoConjunto(FILE *source, ArbolConjuntos *arbol, char nombre[999]) {
     if (!&arbol) return;
 
-    ArbolConjuntos *arbolPrincipal = fnBuscaArbolConjunto(&arbol, nombre);
+    ArbolConjuntos *arbolPrincipal = fnBuscaArbolConjunto(arbol, nombre);
     if (arbolPrincipal != NULL) {
-        fprintf(source, "\nElementos Arbol: %s -> {", arbolPrincipal->nombre);
+        fprintf(source, "Elementos Arbol: %s -> {", arbolPrincipal->nombre);
         bool esPrimero = true;
         imprimirElementos(arbolPrincipal->detalleNodo, source, &esPrimero);
         fprintf(source, "}");
@@ -699,7 +832,6 @@ ArbolConjuntos* borrarConjunto(ArbolConjuntos *raiz, char nombre[]) {
             return tmp;
         }
 
-        // caso 3: dos hijos
         ArbolConjuntos *min = minimoNodo(raiz->nodoDerecha);
 
         strcpy(raiz->nombre, min->nombre);
@@ -803,6 +935,45 @@ void fnBorrarTodos(ArbolConjuntos *raiz) {
     free(raiz);
 }
 
+void fnEjecutaFuncion(ListaItems *items, FILE *out) {
+
+    // VALIDA ACCIÓN
+
+    // ARBOL ( CONJUNTO )
+    if (strcmp(catalogoOperaciones[0], items[0].item[0].nombre) == 0) {
+        opcionArbol(out, arbolMaestro, items[0].item[1].nombre);
+    }
+    // ELEMENTOS ( CONJUNTO )
+    else if (strcmp(catalogoOperaciones[1], items[0].item[0].nombre) == 0) {
+        fnImprimeElementoConjunto(out, arbolMaestro, items[0].item[1].nombre);
+    }
+    // CONJUNTOS ( )
+    else if (strcmp(catalogoOperaciones[2], items[0].item[0].nombre) == 0) {
+        fnOpcionArbolMaestro(out, arbolMaestro);
+    }
+    // BORRAR ( CONJUNTO )
+    else if (strcmp(catalogoOperaciones[3], items[0].item[0].nombre) == 0) {
+        borrarConjunto(arbolMaestro, items[0].item[1].nombre);
+    }
+    // BORRAR_ELEMENTO ( CONJUNTO, ELEMENTO ) || ( * , ELEMENTO )
+    else if (strcmp(catalogoOperaciones[4], items[0].item[0].nombre) == 0) {
+
+        if (&items[2] != NULL) {
+            opcionBorrarElementos(arbolMaestro, items[0].item[1].nombre, items[0].item[2].nombre);
+        } else {
+            opcionBorrarElementos(arbolMaestro, "*", items[0].item[1].nombre);
+        }
+
+    }
+    // BORRAR_CONJUNTOS ( )
+    else if (strcmp(catalogoOperaciones[5], items[0].item[0].nombre) == 0) {
+        fnBorrarTodos(arbolMaestro);
+    } else {
+        fnImprimeTexto("No se encontró la opción especificada", out);
+    }
+    fprintf(out, "\n=========================================================\n");
+}
+
 int main(void) {
 
 
@@ -810,6 +981,11 @@ int main(void) {
     char lista_conjuntos[999][999];
     char nombreArchivo[999];
     char tmpNombreArchivo[999];
+
+    char buffer[5000] = "";
+    char linea[999];
+
+    int enBloque = 0;
 
     printf("Ingrese nombre del archivo: ");
     scanf("%s", tmpNombreArchivo);
@@ -824,22 +1000,7 @@ int main(void) {
     }
 
     printf("Iniciando el proceso de carga de archivo...");
-    int i = 0;
-    while (
-        fgets(lista_conjuntos[i], 999, archivo) != NULL
-    ) {
-        int cmp = strcmp(lista_conjuntos[i], "\n");
-        if (cmp == 0)
-            continue;
-        i++;
-    }
 
-    fclose(archivo);
-
-    if (i == 0){
-        printf("No se encontraron registros en archivo");
-        return 1;
-    }
 
     printf("Iniciando carga de conjuntos");
 
@@ -847,14 +1008,60 @@ int main(void) {
     //     printf("Ocurrió un error al realizar la carga de los conjuntos");
     // }
 
+    char nombreSalida[999] = "";
+    sprintf(nombreSalida, "../%s.OUT.txt", tmpNombreArchivo);
+    FILE *archivoSalida = fopen(nombreSalida, "w");
+
     ListaItems *listaItems = NULL;
-    for (int i = 0; lista_conjuntos[i][0] != '\0'; i++) {
+    while (fgets(linea, sizeof(linea), archivo)) {
+        linea[strcspn(linea, "\n")] = '\0';
+
+        // Si no estamos acumulando, limpiar buffer
+        if (!enBloque) {
+            buffer[0] = '\0';
+        }
+
+        strcat(buffer, linea);
+
+        // Detectar inicio de bloque
+        if (strchr(linea, '{') != NULL && strchr(linea, '}') == NULL) {
+            enBloque = 1;
+            continue;
+        }
+
+        // Si estamos en bloque, esperar cierre
+        if (enBloque) {
+            if (strchr(linea, '}') != NULL) {
+                enBloque = 0;
+            } else {
+                continue;
+            }
+        }
+
         ListaItems *items = calloc(1, sizeof(ListaItems));
-        fnObtieneItems(lista_conjuntos[i], items);
+        memset(items->item, 0, sizeof(items->item));
+        memset(items->item[1].nombre, 0, sizeof(items->item[1].nombre));
+
+        fnObtieneItems(buffer, items);
+        if (items[0].item->TipoDato == 4) {
+            fprintf(archivoSalida, "=========================================================\n");
+            fprintf(archivoSalida, "Se ejecuta la operación: %s \n", items[0].item->nombre);
+            fnEjecutaFuncion(items, archivoSalida);
+            fflush(archivoSalida);
+            continue;
+        }
+
+        fprintf(archivoSalida, "Se inicia la carga del conjunto: %s \n", items[0].item->nombre);
+
         listaItems = fnObtieneItemsPostFijo(items);
         fnCargaConjuntos(&arbolMaestro, items->item[0].nombre);
         ArbolExpresiones *nuevoArbolExpresiones = fnConstruyeArbolExpresion(listaItems);
         ArbolConjuntos *tmpArbolConjunto = fnBuscaArbolConjunto(arbolMaestro, items->item[0].nombre);
+
+        if (nuevoArbolExpresiones == NULL || listaItems == NULL) {
+            fprintf(archivoSalida, "Ocurrió un error al intentar cargar el conjunto: %s \n", items[0].item->nombre);
+            continue;
+        }
 
         if (tmpArbolConjunto != NULL) {
             tmpArbolConjunto->detalleExpresion = nuevoArbolExpresiones;
@@ -862,6 +1069,7 @@ int main(void) {
             fnCargaUniverso(tmpArbolConjunto->detalleNodo);
         }
 
+        fprintf(archivoSalida, "Conjunto guardado: %s \n", items[0].item->nombre);
 
         // printf("=================== NUEVO CONJUNTO ========================== \n");
         // for (int i = 0; i < items->cantidadItems; i++) {
@@ -870,11 +1078,10 @@ int main(void) {
         // }
     }
 
+    fclose(archivo);
     //fnRecorreArbolMaestro(arbolMaestro);
 
-    char nombreSalida[999] = "";
-    sprintf(nombreSalida, "../%s.OUT.txt", tmpNombreArchivo);
-    FILE *archivoSalida = fopen(nombreSalida, "w");
+
     int opcion;
     char conjunto[50];
     char elemento[50];
@@ -903,7 +1110,7 @@ int main(void) {
             case 2:
                 printf("Conjunto: ");
                 scanf("%s", conjunto);
-                fnImprimeElementoConjunto(archivoSalida, *arbolMaestro, conjunto);
+                fnImprimeElementoConjunto(archivoSalida, arbolMaestro, conjunto);
                 printf("Cargado correctamente en archivo de salida!!");
                 break;
 

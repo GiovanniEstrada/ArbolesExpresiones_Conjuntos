@@ -19,8 +19,6 @@ DomesticosOmnivoros = Domesticos * Omnivoros
 SoloMamiferos = Mamiferos - Acuaticos
 SoloAves = Aves - Voladores
 
-NoMamiferos = ~Mamiferos
-NoAves = ~Aves
 
 Terrestres = Mamiferos + Reptiles
 Animales = Mamiferos + Aves + Reptiles + Acuaticos

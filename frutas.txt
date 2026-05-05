@@ -19,3 +19,4 @@ Mixto1 = Frutas + Verduras * Rojas
 Mixto2 = Frutas * Amarillas + Verduras * Verdes
 Mixto3 = Frutas - Amarillas * Rojas
 Final = Mixto1 + Mixto2 - Mixto4
+Diferencia = Rojas # Frutas

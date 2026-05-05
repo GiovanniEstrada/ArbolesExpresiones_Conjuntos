@@ -1,0 +1,70 @@
+NumerosPares = {2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40,
+                42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62, 64, 66, 68, 70, 72, 74, 76, 78, 80,
+                82, 84, 86, 88, 90, 92, 94, 96, 98, 100}
+Elementos( NumerosPares )
+Arbol( NumerosPares )
+NumerosImpares = {1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39,
+                  41, 43, 45, 47, 49, 51, 53, 55, 57, 59, 61, 63, 65, 67, 69, 71, 73, 75, 77, 79,
+                  81, 83, 85, 87, 89, 91, 93, 95, 97, 99}
+Elementos( NumerosImpares )
+Arbol( NumerosImpares )
+MultiplosDe3 = {3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45, 48, 51, 54, 57, 60,
+                63, 66, 69, 72, 75, 78, 81, 84, 87, 90, 93, 96, 99}
+Arbol ( NumerosPares )
+MultiplosDe5 = {5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100}
+Arbol (MultiplosDe5)
+Elementos( MultiplosDe5 )
+Primos = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71,
+          73, 79, 83, 89, 97}
+Arbol( Primos )
+Cuadrados = {1, 4, 9, 16, 25, 36, 49, 64, 81, 100}
+Elementos( Cuadrados )
+NumerosDel1al60 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+                   21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+                   41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60}
+Elementos( NumerosDel1al60 )
+NumerosDel41al100 = {41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60,
+                     61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80,
+                     81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100}
+Elementos( NumerosDel41al100 )
+ParesMenoresDe50 = NumerosPares - {50, 52, 54, 56, 58, 60, 62, 64, 66, 68, 70, 72, 74, 76, 78, 80, 82, 84, 86, 88, 90, 92, 94, 96, 98, 100}
+Elementos( ParesMenoresDe50 )
+ImparesMayoresDe30 = NumerosImpares - {1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29}
+Arbol( ImparesMayoresDe30 )
+MultiplosDe15 = MultiplosDe3 * MultiplosDe5
+NumerosNoPrimos = Universo - Primos
+ParesYMultiplosDe5 = NumerosPares * MultiplosDe5
+ImparesYCuadrados = NumerosImpares * Cuadrados
+ConjuntoA = (NumerosPares + MultiplosDe5) * Primos
+Elementos( ConjuntoA )
+ConjuntoB = ((NumerosImpares * Cuadrados) + MultiplosDe15) - ParesMenoresDe50
+Elementos( ConjuntoB )
+ConjuntoC = NumerosDel1al60 # MultiplosDe3
+ConjuntoD = ~ (Primos + Cubos)
+Elementos( ConjuntoD )
+NumerosEspeciales = ((ParesYMultiplosDe5 + Cuadrados) - Primos) * ImparesMayoresDe30
+NumerosDivisiblesPor2o3 = NumerosPares + MultiplosDe3
+NumerosDivisiblesPor2y3 = NumerosPares * MultiplosDe3
+ConjuntoComplejo1 = (NumerosDivisiblesPor2o3 * ImparesMayoresDe30) # Primos
+Elementos( ConjuntoComplejo1 )
+ConjuntoComplejo2 = ~((NumerosPares + NumerosImpares) - Cuadrados)
+Elementos( ConjuntoComplejo2 )
+ConjuntoComplejo3 = (MultiplosDe15 # Primos) + (Cuadrados * NumerosImpares)
+Elementos( ConjuntoComplejo3 )
+ConjuntoFinal = (ConjuntoA + ConjuntoB) - ConjuntoC # ConjuntoD
+Vacio = { }
+NumerosDel1al80 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+                   21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+                   41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60,
+                   61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80}
+NumerosMayoresDe50 = Universo - NumerosDel1al50
+ParesMayoresDe40 = {42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62, 64, 66, 68, 70, 72, 74, 76, 78, 80,
+                    82, 84, 86, 88, 90, 92, 94, 96, 98, 100}
+OperacionAvanzada1 = (((NumerosPares + MultiplosDe3) * NumerosImpares) # Cuadrados) + MultiplosDe15
+Elementos( OperacionAvanzada1 )
+OperacionAvanzada2 = ~((NumerosDivisiblesPor2y3 + Primos) * NumerosMayoresDe50)
+Elementos( OperacionAvanzada2 )
+OperacionAvanzada3 = (ConjuntoComplejo1 + ConjuntoComplejo2) # ConjuntoComplejo3
+Elementos( OperacionAvanzada3 )
+OperacionAvanzada4 = (NumerosDel1al80 * Pares) - (ImparesYCuadrados # MultiplosDe5)
+Elementos( OperacionAvanzada4 )
